@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using NLog;
 
 namespace Homework_11
 {
@@ -20,9 +21,11 @@ namespace Homework_11
     /// </summary>
     public partial class MainWindow : Window
     {
+        private static Logger logger = NLog.LogManager.GetCurrentClassLogger();
         public MainWindow()
         {
             InitializeComponent();
+            logger.Debug("Запуск приложения");
         }
     }
 }
