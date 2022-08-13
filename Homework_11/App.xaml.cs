@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using NLog;
 
 namespace Homework_11
 {
@@ -13,5 +14,11 @@ namespace Homework_11
     /// </summary>
     public partial class App : Application
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+        public App()
+        {
+            logger.Debug("Запуск приложения");
+            logger.Debug($"Вызов конструктора {this.GetType().Name}");
+        }
     }
 }

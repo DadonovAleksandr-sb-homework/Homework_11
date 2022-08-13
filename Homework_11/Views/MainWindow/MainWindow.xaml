@@ -1,0 +1,76 @@
+﻿<Window x:Class="Homework_11.MainWindow"
+        x:Name="mainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:Homework_11.ViewModels"
+        xmlns:fa="http://schemas.fontawesome.com/icons/"
+        xmlns:c="clr-namespace:Homework_11.Infrastructure.Convertors"
+        xmlns:local="clr-namespace:Homework_11"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
+        <c:AppViewModeToString x:Key="AppViewModeConvertor"></c:AppViewModeToString>
+    </Window.Resources>
+    <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Row="0" Grid.Column="0" >
+                <Button Height="40" Margin="2" Command="{Binding Path=ChangePageIndexCommand}" CommandParameter="1">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:ImageAwesome Icon="Solid_UserAlt" Height="20" Margin="0,0,10,0"/>
+                        <TextBlock Text="Клиенты" FontSize="16"/>
+                    </StackPanel>
+                </Button>
+                <Button Height="40" Margin="2" Command="{Binding Path=ChangePageIndexCommand}" CommandParameter="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Welcome 1" FontSize="16"/>
+                    </StackPanel>
+                </Button>
+                <Button Height="40" Margin="2" Command="{Binding Path=ChangePageIndexCommand}" CommandParameter="3">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Welcome 2" FontSize="16"/>
+                    </StackPanel>
+                </Button>
+                <Button Height="40" Margin="2" Command="{Binding Path=ChangePageIndexCommand}" CommandParameter="4">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:ImageAwesome Icon="Solid_Wrench" Height="20" Margin="0,0,10,0"/>
+                        <TextBlock Text="Настройки" FontSize="16"/>
+                    </StackPanel>
+                </Button>
+                <Button Height="40" Margin="2" Cursor="Hand" 
+                        Command="{Binding LogOutCommand}"
+                        CommandParameter="{Binding ElementName=mainWindow}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:ImageAwesome Icon="Solid_SignOutAlt" Height="20" Margin="0,0,10,0"/>
+                        <TextBlock Text="Выход" FontSize="16"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+            <StatusBar Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="Transparent">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBlock Foreground="White" Text="Режим работы: "/>
+                    <TextBlock Foreground="White" Text="{Binding Path=ViewMode, Converter={StaticResource AppViewModeConvertor}}"/>
+                </StackPanel>
+                
+            </StatusBar>
+            <Frame Grid.Row="0" Grid.Column="1"
+                   Content="{Binding CurrentPage}"
+                   NavigationUIVisibility="Hidden"
+                   Opacity="{Binding FrameOpacity}">
+                
+            </Frame>
+        </Grid>
+</Window>

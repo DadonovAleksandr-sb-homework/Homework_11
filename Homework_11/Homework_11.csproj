@@ -8,12 +8,15 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <None Remove="Resources\Images\bank.jpg" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Resource Include="Resources\Images\bank.jpg" />
+    </ItemGroup>
+
+    <ItemGroup>
       <Folder Include="Infrastructure\Common" />
-      <Folder Include="Infrastructure\Convertors" />
-      <Folder Include="Models" />
-      <Folder Include="Resources" />
-      <Folder Include="ViewModels" />
-      <Folder Include="Views" />
     </ItemGroup>
 
     <ItemGroup>

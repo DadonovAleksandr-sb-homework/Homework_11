@@ -25,7 +25,6 @@ namespace Homework_11
         public MainWindow()
         {
             InitializeComponent();
-            logger.Debug("Запуск приложения");
         }
     }
 }
