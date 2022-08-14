@@ -9,15 +9,13 @@ namespace Homework_11.ViewModels;
 
 internal class LoginViewModel : BaseViewModel
 {
-    private static Logger logger = LogManager.GetCurrentClassLogger();
     public LoginViewModel()
     {
         logger.Debug($"Вызов конструктора {this.GetType().Name}");
+        
         #region commands
-
         SetConsultantMode = new LambdaCommand(OnSetConsultantModeExecuted, CanSetConsultantModeExecute);
         SetManagerMode = new LambdaCommand(OnSetManagerModeExecuted, CanSetManagerModeExecute);
-        
         #endregion
     }
     
@@ -26,28 +24,38 @@ internal class LoginViewModel : BaseViewModel
 
     #region SetConsultantMode
     public ICommand SetConsultantMode { get; }
-    private void OnSetConsultantModeExecuted(object p) => OpenMainWindow(AppViewMode.Consultant, p);
+    private void OnSetConsultantModeExecuted(object p)
+    {
+        logger.Debug($"Команда: Выполнить вход в приложение с правами консультанта");
+        OpenMainWindow(AppViewMode.Consultant, p);   
+    }
     private bool CanSetConsultantModeExecute(object p) => true;
     #endregion
         
     #region SetManagerMode
     public ICommand SetManagerMode { get; }
-    private void OnSetManagerModeExecuted(object p) => OpenMainWindow(AppViewMode.Manager, p);
+    private void OnSetManagerModeExecuted(object p)
+    {
+        logger.Debug($"Команда: Выполнить вход в приложение с правами менеджера");
+        OpenMainWindow(AppViewMode.Manager, p);
+    }
     private bool CanSetManagerModeExecute(object p) => true;
     #endregion
-
     
     private void OpenMainWindow(AppViewMode mode, object p)
     {
         MainWindow mainWindow = new MainWindow();
         mainWindow.DataContext = new MainWindowViewModel(mode);
         mainWindow.Show();
-        if(p is Window window)
+        logger.Debug($"Открытие окна {mainWindow.Title}");
+
+        if (p is Window window)
+        {
             window.Close();
+            logger.Debug($"Закрытие окна {window.Title}");
+        }
     }
-
-
-
+    
     #endregion
 
 }

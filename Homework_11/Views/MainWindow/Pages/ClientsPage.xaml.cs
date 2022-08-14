@@ -2,9 +2,9 @@
 
 namespace Homework_11.Views.MainWindow.Pages;
 
-public partial class Login : Page
+public partial class ClientsPage : Page
 {
-    public Login()
+    public ClientsPage()
     {
         InitializeComponent();
     }

@@ -2,9 +2,9 @@
 
 namespace Homework_11.Views.MainWindow.Pages;
 
-public partial class BankCommon : Page
+public partial class AppSettingsPage : Page
 {
-    public BankCommon()
+    public AppSettingsPage()
     {
         InitializeComponent();
     }

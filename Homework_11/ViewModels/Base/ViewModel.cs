@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using NLog;
 
 namespace Homework_11.ViewModels.Base;
 
 public class BaseViewModel : INotifyPropertyChanged
 {
+    protected static Logger logger = LogManager.GetCurrentClassLogger();
     public event PropertyChangedEventHandler? PropertyChanged;
 
     protected virtual void OnPropertyChanged([CallerMemberName] string PropertyName = null)

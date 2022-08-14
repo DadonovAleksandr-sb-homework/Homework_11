@@ -1,0 +1,41 @@
+﻿<Page x:Class="Homework_11.Views.MainWindow.Pages.AppSettingsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:vm="clr-namespace:Homework_11.ViewModels"
+      xmlns:local="clr-namespace:Homework_11.Views.MainWindow.Pages"
+      mc:Ignorable="d"
+      Title="AppSettings" 
+      d:Height="450" d:Width="800"
+      Background="Transparent">
+    <Page.DataContext>
+        <vm:AppSettingsViewModel/>
+    </Page.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Vertical">
+            <GroupBox Header="Клиенты">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="База клиентов:"
+                               Foreground="Silver"/>
+                    <TextBox Text="{Binding ClientRepositoryFilePath, Mode=TwoWay}"
+                             Foreground="Silver"/>
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Right">
+                        <Button Content="Генерировать тестовый набор клиентов"
+                                Margin="5"
+                                Command="{Binding GenTestClientsCommand}"/>    
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Сохранить" 
+                    Command="{Binding Path=SaveAppSettingsCommand}"
+                    Margin="15, 5" Width="140" Cursor="Hand"/>
+        </StackPanel>
+    </Grid>
+</Page>

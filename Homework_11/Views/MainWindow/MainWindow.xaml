@@ -9,6 +9,7 @@
         xmlns:c="clr-namespace:Homework_11.Infrastructure.Convertors"
         xmlns:local="clr-namespace:Homework_11"
         mc:Ignorable="d"
+        Background="#272537"
         Title="MainWindow" Height="450" Width="800"
         WindowStartupLocation="CenterScreen">
     <Window.DataContext>
@@ -28,7 +29,7 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Row="0" Grid.Column="0" >
-                <Button Height="40" Margin="2" Command="{Binding Path=ChangePageIndexCommand}" CommandParameter="1">
+                <Button Height="40" Margin="2" Command="{Binding Path=SetClientsView}">
                     <StackPanel Orientation="Horizontal">
                         <fa:ImageAwesome Icon="Solid_UserAlt" Height="20" Margin="0,0,10,0"/>
                         <TextBlock Text="Клиенты" FontSize="16"/>
@@ -44,7 +45,7 @@
                         <TextBlock Text="Welcome 2" FontSize="16"/>
                     </StackPanel>
                 </Button>
-                <Button Height="40" Margin="2" Command="{Binding Path=ChangePageIndexCommand}" CommandParameter="4">
+                <Button Height="40" Margin="2" Command="{Binding Path=SetAppSettingsView}">
                     <StackPanel Orientation="Horizontal">
                         <fa:ImageAwesome Icon="Solid_Wrench" Height="20" Margin="0,0,10,0"/>
                         <TextBlock Text="Настройки" FontSize="16"/>
@@ -61,16 +62,15 @@
             </StackPanel>
             <StatusBar Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="Transparent">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <TextBlock Foreground="White" Text="Режим работы: "/>
-                    <TextBlock Foreground="White" Text="{Binding Path=ViewMode, Converter={StaticResource AppViewModeConvertor}}"/>
+                    <TextBlock Foreground="Silver" Text="Режим работы: "/>
+                    <TextBlock Foreground="Silver" Text="{Binding Path=ViewMode, Converter={StaticResource AppViewModeConvertor}}"/>
                 </StackPanel>
                 
             </StatusBar>
             <Frame Grid.Row="0" Grid.Column="1"
                    Content="{Binding CurrentPage}"
                    NavigationUIVisibility="Hidden"
-                   Opacity="{Binding FrameOpacity}">
-                
-            </Frame>
+                   Opacity="{Binding FrameOpacity}"
+                   />
         </Grid>
 </Window>

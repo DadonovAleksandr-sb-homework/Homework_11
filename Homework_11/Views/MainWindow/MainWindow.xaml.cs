@@ -21,7 +21,6 @@ namespace Homework_11
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static Logger logger = NLog.LogManager.GetCurrentClassLogger();
         public MainWindow()
         {
             InitializeComponent();
