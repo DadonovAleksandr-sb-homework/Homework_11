@@ -23,7 +23,7 @@ public class MainWindowViewModel : BaseViewModel
     /// <summary>
     /// Режим доступа к данным: консульант, менеджер
     /// </summary>
-    public AppViewMode ViewMode { get; private set; }
+    public Worker Worker { get; private set; }
     /// <summary>
     /// Настройки приложения
     /// </summary>
@@ -46,6 +46,7 @@ public class MainWindowViewModel : BaseViewModel
         
         Bank = new Bank("Банк А", new ClientsFileRepository(AppSettings.ClientsRepositoryFilePath), worker);
         _Title = $"{Bank.Name}. Программа консультант";
+        Worker = worker;
         
         #region Pages
         _clients = new ClientsPage();

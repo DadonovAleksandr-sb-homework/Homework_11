@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Homework_11.Models.Clients;
+using Homework_11.ViewModels;
 
 namespace Homework_11.Models;
 
@@ -24,9 +25,9 @@ public class Bank
         _worker = worker;
     }
 
-    public IEnumerable<Client> GetClientsInfo()
+    public IEnumerable<ClientInfo> GetClientsInfo()
     {
-        var clientsInfo = new List<Client>();
+        var clientsInfo = new List<ClientInfo>();
         foreach (var client in ClientsRepository.GetAllClients())
         {
             clientsInfo.Add(_worker.GetClientInfo(client));

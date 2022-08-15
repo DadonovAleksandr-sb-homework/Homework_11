@@ -9,7 +9,7 @@ namespace Homework_11.ViewModels;
 public class ClientsViewModel : BaseViewModel
 {
     
-    public ObservableCollection<Client> Clients { get; }
+    public ObservableCollection<ClientInfo> Clients { get; }
     
     IClientsRepository ClientsRepository;
     
@@ -28,7 +28,7 @@ public class ClientsViewModel : BaseViewModel
         EditClientCommand = new LambdaCommand(OnEditClientCommandExecuted, CanEditClientCommandExecute);
         #endregion
         //TODO: спросить как сделать отслеживание изменений клиентов, чтобы данные автоматически обновллялись и во вьюхе и репозитории
-        Clients = new ObservableCollection<Client>(mainVm.Bank.GetClientsInfo());
+        Clients = new ObservableCollection<ClientInfo>(mainVm.Bank.GetClientsInfo());
     }
     
     
@@ -69,5 +69,17 @@ public class ClientsViewModel : BaseViewModel
     #endregion
 
 
+    #endregion
+    
+    
+    #region Window title
+    
+    private bool dataAccess;
+    
+    public bool DataAccess
+    {
+        get => dataAccess;
+        set => Set(ref dataAccess, value);
+    }
     #endregion
 }

@@ -1,4 +1,5 @@
 ﻿using Homework_11.Models.Clients;
+using Homework_11.ViewModels;
 
 namespace Homework_11.Models.Worker;
 
@@ -12,9 +13,9 @@ public abstract class Worker
     /// </summary>
     /// <param name="client"></param>
     /// <returns></returns>
-    public virtual Client GetClientInfo(Client client)
+    public virtual ClientInfo GetClientInfo(Client client)
     {
-        return client;
+        return new ClientInfo(client);
     }
     
     

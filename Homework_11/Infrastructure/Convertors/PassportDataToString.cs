@@ -1,22 +1,21 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using Homework_11.Models;
+using Homework_11.Models.Common;
 using Homework_11.Models.Worker;
 
 namespace Homework_11.Infrastructure.Convertors;
 
-public class AppViewModeToString : IValueConverter
+public class PassportDataToString : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (!(value is Worker worker)) return null;
-        return worker switch
+        if (!(value is PassportData data)) return null;
+        if (parameter is bool flag)
         {
-            Consultant _ => "консультант",
-            Manager _ => "менеджер",
-            _ => throw new ArgumentOutOfRangeException()
-        };
+            return flag ? data.ToString() : "****-******";
+        }
+        return data.ToString();
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

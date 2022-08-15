@@ -63,7 +63,7 @@
             <StatusBar Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="Transparent">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <TextBlock Foreground="Silver" Text="Режим работы: "/>
-                    <TextBlock Foreground="Silver" Text="{Binding Path=ViewMode, Converter={StaticResource AppViewModeConvertor}}"/>
+                    <TextBlock Foreground="Silver" Text="{Binding Path=Worker, Converter={StaticResource AppViewModeConvertor}}"/>
                 </StackPanel>
                 
             </StatusBar>

@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:vm="clr-namespace:Homework_11.ViewModels"
+      xmlns:c="clr-namespace:Homework_11.Infrastructure.Convertors"
       xmlns:local="clr-namespace:Homework_11.Views.MainWindow.Pages"
       mc:Ignorable="d"
       Title="Clients" 
@@ -12,6 +13,9 @@
     <Page.DataContext>
         <vm:ClientsViewModel/>
     </Page.DataContext>
+    <Page.Resources>
+        <c:PassportDataToString x:Key="PassportDataConvertor"></c:PassportDataToString>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -44,7 +48,7 @@
                 <DataGridTextColumn Header="Имя" Binding="{Binding Path=FirstName}"/>
                 <DataGridTextColumn Header="Фамилия" Binding="{Binding Path=LastName}"/>
                 <DataGridTextColumn Header="Номер телефона" Binding="{Binding Path=PhoneNumber}"/>
-                <DataGridTextColumn Header="Пасспортные данные" Binding="{Binding Path=PassportData}" Width="*"/>
+                <DataGridTextColumn Header="Пасспортные данные" Binding="{Binding Path=StringPassportData}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
         

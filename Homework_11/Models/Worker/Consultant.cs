@@ -1,13 +1,14 @@
 ﻿using Homework_11.Models.Clients;
-using Homework_11.Models.Common;
+using Homework_11.ViewModels;
 
 namespace Homework_11.Models.Worker;
 
 public class Consultant : Worker
 {
-    public override Client GetClientInfo(Client client)
+    public override ClientInfo GetClientInfo(Client client)
     {
-        //client.PassportData = new PassportData(0000, 000000);
-        return client;
+        var clientInfo = new ClientInfo(client);
+        clientInfo.StringPassportData = "****-******";
+        return clientInfo;
     }
 }
