@@ -44,11 +44,18 @@ public class ClientsFileRepository: IClientsRepository
     /// Конструктор репозитория
     /// </summary>
     /// <param name="path">Путь к файлу-репозиторию</param>
-    public ClientsFileRepository(string path, IEnumerable<Client?> clients) : this(path)
+    public ClientsFileRepository(string path, IEnumerable<Client> clients) : this(path)
     {
+        if (clients.Any())
+        {
+            int id = clients.Max(c => c.Id);
+            clients.ToList().ForEach(c=>c.Id = id++);
+        }
         logger.Debug($"Вызов конструктора {GetType().Name} c параметрами: база клиентов {path}, клиенты в кол-ве {clients.Count()} шт");
+        
         _path = path;
         _clients = clients.ToList();
+        Save();
     }
     
     /// <summary>
@@ -66,7 +73,7 @@ public class ClientsFileRepository: IClientsRepository
         {
             logger.Warn($"Удаление клиента с ID =  {clientId} не возможно. Заданный ID не найден");
         }
-           
+        Save();
     }
 
     /// <summary>
@@ -97,32 +104,38 @@ public class ClientsFileRepository: IClientsRepository
     /// Добавление нового клиента
     /// </summary>
     /// <param name="client">клиент</param>
-    public void InsertClient(Client? client)
+    public void InsertClient(Client client)
     {
+        int id = 0;
+        if (_clients.Any())
+            id = _clients.Max(c => c.Id);
+        client.Id = id++;
         logger.Debug($"Добавление клиента: ID={client.Id}, Имя={client.FirstName}, Фамилия={client.LastName}");
         _clients.Add(client);   
+        Save();
     }
 
     /// <summary>
     /// Обновление данных о клиенте
     /// </summary>
     /// <param name="client"></param>
-    public void UpdateClient(Client? client)
+    public void UpdateClient(Client client)
     {
-        if (_clients.Contains(client))
+        if (!_clients.Any(c=>c.Id == client.Id))
         {
             logger.Error($"Клиент c ID={client.Id}, Имя={client.FirstName}, Фамилия={client.LastName} отсутствует в базе");
             throw new ArgumentOutOfRangeException(nameof(client), "Такого объекта нет в списке");
         }
         
-        _clients[_clients.IndexOf(client)] = client;
+        _clients[_clients.IndexOf(_clients.First(c=>c.Id == client.Id))] = client;
         logger.Debug($"Клиент c ID={client.Id}, Имя={client.FirstName}, Фамилия={client.LastName} обновлен");
+        Save();
     }
 
     /// <summary>
     /// Сохранение списка клиентов в файл
     /// </summary>
-    public void Save()
+    void Save()
     {
         string dirPath = Path.GetFileName(Path.GetDirectoryName(_path));
         if (!Directory.Exists(dirPath))
@@ -131,6 +144,7 @@ public class ClientsFileRepository: IClientsRepository
         }
         string json = JsonSerializer.Serialize(_clients);
         File.WriteAllText(_path, json, Encoding.UTF8);
+        logger.Debug($"Сохранение {_clients.Count()} клиентов в файл {_path}");
     }
 
     /// <summary>
@@ -140,6 +154,7 @@ public class ClientsFileRepository: IClientsRepository
     {
         string data = File.ReadAllText(_path);
         _clients = JsonSerializer.Deserialize<List<Client>>(data);
+        logger.Debug($"Загрузка {_clients.Count()} клиентов из файла {_path}");
     }
 
 }

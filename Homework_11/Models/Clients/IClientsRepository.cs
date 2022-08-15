@@ -2,7 +2,7 @@
 
 namespace Homework_11.Models.Clients;
 
-interface IClientsRepository
+public interface IClientsRepository
 {
     /// <summary>
     /// Получить список клиентов

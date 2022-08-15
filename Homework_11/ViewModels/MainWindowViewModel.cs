@@ -5,6 +5,8 @@ using System.Windows.Input;
 using Homework_11.Infrastructure.Commands;
 using Homework_11.Models;
 using Homework_11.Models.AppSettings;
+using Homework_11.Models.Clients;
+using Homework_11.Models.Worker;
 using Homework_11.ViewModels.Base;
 using Homework_11.Views;
 using Homework_11.Views.MainWindow.Pages;
@@ -26,18 +28,24 @@ public class MainWindowViewModel : BaseViewModel
     /// Настройки приложения
     /// </summary>
     public AppSettings AppSettings { get; private set; }
-
-    internal MainWindowViewModel()
+    /// <summary>
+    /// Модель банка
+    /// </summary>
+    public Bank Bank { get; private set; }
+    
+    public MainWindowViewModel()
     {
         logger.Debug($"Вызов конструктора {this.GetType().Name} по умолчанию");
     }
-    internal MainWindowViewModel(AppViewMode mode)
+    public MainWindowViewModel(Worker worker)
     {
         logger.Debug($"Вызов конструктора {this.GetType().Name}");
-        ViewMode = mode;
         
         _appSettingsrepository = new AppSettingsFileRepository();
         AppSettings = _appSettingsrepository.Load();
+        
+        Bank = new Bank("Банк А", new ClientsFileRepository(AppSettings.ClientsRepositoryFilePath), worker);
+        _Title = $"{Bank.Name}. Программа консультант";
         
         #region Pages
         _clients = new ClientsPage();
@@ -70,7 +78,7 @@ public class MainWindowViewModel : BaseViewModel
         set
         {
             Set(ref _currentPage, value);
-            logger.Debug($"Переход на страницу: {value.Title}");
+            logger.Debug($"Переход на страницу: {value.Name}");
         }
     }
 
@@ -124,5 +132,16 @@ public class MainWindowViewModel : BaseViewModel
     
     #endregion
     
+    #region Window title
     
+    private string _Title;
+    /// <summary>
+    /// Заголовок окна
+    /// </summary>
+    public string Title
+    {
+        get => _Title;
+        set => Set(ref _Title, value);
+    }
+    #endregion
 }

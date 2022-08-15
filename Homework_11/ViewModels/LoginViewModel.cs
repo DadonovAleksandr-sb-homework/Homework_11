@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using Homework_11.Infrastructure.Commands;
 using Homework_11.Models;
+using Homework_11.Models.Worker;
 using Homework_11.ViewModels.Base;
 using NLog;
 
@@ -27,7 +28,7 @@ internal class LoginViewModel : BaseViewModel
     private void OnSetConsultantModeExecuted(object p)
     {
         logger.Debug($"Команда: Выполнить вход в приложение с правами консультанта");
-        OpenMainWindow(AppViewMode.Consultant, p);   
+        OpenMainWindow(new Consultant(), p);   
     }
     private bool CanSetConsultantModeExecute(object p) => true;
     #endregion
@@ -37,15 +38,15 @@ internal class LoginViewModel : BaseViewModel
     private void OnSetManagerModeExecuted(object p)
     {
         logger.Debug($"Команда: Выполнить вход в приложение с правами менеджера");
-        OpenMainWindow(AppViewMode.Manager, p);
+        OpenMainWindow(new Manager(), p);
     }
     private bool CanSetManagerModeExecute(object p) => true;
     #endregion
     
-    private void OpenMainWindow(AppViewMode mode, object p)
+    private void OpenMainWindow(Worker worker, object p)
     {
         MainWindow mainWindow = new MainWindow();
-        mainWindow.DataContext = new MainWindowViewModel(mode);
+        mainWindow.DataContext = new MainWindowViewModel(worker);
         mainWindow.Show();
         logger.Debug($"Открытие окна {mainWindow.Title}");
 

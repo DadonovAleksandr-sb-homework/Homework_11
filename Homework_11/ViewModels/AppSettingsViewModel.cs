@@ -61,8 +61,6 @@ public class AppSettingsViewModel : BaseViewModel
         ClientRepositoryFilePath = Path.Combine(Directory.GetCurrentDirectory(), @"clients.json");
         _appSettings.ClientsRepositoryFilePath = ClientRepositoryFilePath;
         ClientsFileRepository clientsRepository = new ClientsFileRepository(ClientRepositoryFilePath, clients);
-        clientsRepository.Save();
-
     }
 
     private bool CanGenTestClientsCommandExecute(object p) => true;

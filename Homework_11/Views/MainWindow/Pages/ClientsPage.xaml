@@ -3,14 +3,56 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:vm="clr-namespace:Homework_11.ViewModels"
       xmlns:local="clr-namespace:Homework_11.Views.MainWindow.Pages"
       mc:Ignorable="d"
       Title="Clients" 
       d:Height="450" d:Width="800"
       Background="Transparent">
+    <Page.DataContext>
+        <vm:ClientsViewModel/>
+    </Page.DataContext>
     <Grid>
-        <TextBlock Text="Клиенты"
-                   Foreground="Silver"/>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <DataGrid Grid.Row="0" ItemsSource="{Binding Clients}"
+                  Background="Transparent" Foreground="Silver"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  GridLinesVisibility="Vertical"
+                  VerticalGridLinesBrush="LightGray"
+                  SelectionMode="Single">
+            <DataGrid.Resources>
+                <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="Foreground" Value="White" />
+                </Style>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Style.Triggers>
+                        <Trigger Property="DataGridCell.IsSelected" Value="True">
+                            <Setter Property="Background" Value="#353340" />
+                        </Trigger>
+                        <Trigger Property="DataGridColumn.DisplayIndex" Value="3">
+                            <Setter Property="Background" Value="DeepPink" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Имя" Binding="{Binding Path=FirstName}"/>
+                <DataGridTextColumn Header="Фамилия" Binding="{Binding Path=LastName}"/>
+                <DataGridTextColumn Header="Номер телефона" Binding="{Binding Path=PhoneNumber}"/>
+                <DataGridTextColumn Header="Пасспортные данные" Binding="{Binding Path=PassportData}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Добавить" Margin="5" Width="140"/>
+            <Button Content="Редактировать" Margin="5" Width="140"/>
+            <Button Content="Удалить" Margin="5" Width="140" Background="Red"/>
+        </StackPanel>
     </Grid>
 </Page>
 
