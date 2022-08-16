@@ -13,11 +13,8 @@ public abstract class Worker
     /// </summary>
     /// <param name="client"></param>
     /// <returns></returns>
-    public virtual ClientInfo GetClientInfo(Client client)
-    {
-        return new ClientInfo(client);
-    }
-    
-    
+    public abstract ClientInfo GetClientInfo(Client client);
+
+
 
 }
