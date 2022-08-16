@@ -21,37 +21,42 @@
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
-        <DataGrid Grid.Row="0" ItemsSource="{Binding Clients}"
-                  Background="Transparent" Foreground="Silver"
-                  AutoGenerateColumns="False"
-                  IsReadOnly="True"
-                  GridLinesVisibility="Vertical"
-                  VerticalGridLinesBrush="LightGray"
-                  SelectionMode="Single">
-            <DataGrid.Resources>
-                <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
-                    <Setter Property="Foreground" Value="White" />
-                </Style>
-                <Style TargetType="{x:Type DataGridCell}">
-                    <Style.Triggers>
-                        <Trigger Property="DataGridCell.IsSelected" Value="True">
-                            <Setter Property="Background" Value="#353340" />
-                        </Trigger>
-                        <Trigger Property="DataGridColumn.DisplayIndex" Value="3">
-                            <Setter Property="Background" Value="DeepPink" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </DataGrid.Resources>
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Имя" Binding="{Binding Path=FirstName}"/>
-                <DataGridTextColumn Header="Фамилия" Binding="{Binding Path=LastName}"/>
-                <DataGridTextColumn Header="Номер телефона" Binding="{Binding Path=PhoneNumber}"/>
-                <DataGridTextColumn Header="Пасспортные данные" Binding="{Binding Path=StringPassportData}" Width="*"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                      Style="{StaticResource FavsScrollViewer}">
+            <StackPanel Orientation="Vertical">
+                <StackPanel.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.MergedDictionaries>
+                            <ResourceDictionary Source="/Views/DataTemplates/ClientItemTemplate.xaml"/>
+                        </ResourceDictionary.MergedDictionaries>
+                    </ResourceDictionary>
+                </StackPanel.Resources>
+                <ListBox ItemsSource="{Binding Path=Clients}" HorizontalContentAlignment="Stretch">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border CornerRadius="10" Margin="2" BorderThickness="2" BorderBrush="#844eff" Background="#353340">
+                                <StackPanel Orientation="Vertical">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                        <TextBlock Text="{Binding LastName}" Foreground="Silver" Margin="5"/>
+                                        <TextBlock Text="{Binding FirstName}" Foreground="Silver" Margin="5"/>
+                                        <TextBlock Text="{Binding MiddleName}" Foreground="Silver" Margin="5"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+                                        <TextBlock Text="{Binding StringPassportData, StringFormat=Паспортные данные: {0}}" Foreground="Silver" Margin="5"/>
+                                        <TextBlock Text="{Binding PhoneNumber, StringFormat=Телефон: {0}}" Foreground="Silver" Margin="5"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <ListBox.Template>
+                        <ControlTemplate>
+                            <ItemsPresenter />
+                        </ControlTemplate>
+                    </ListBox.Template>
+                </ListBox>
+            </StackPanel>    
+        </ScrollViewer>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="Добавить" Margin="5" Width="140"/>
             <Button Content="Редактировать" Margin="5" Width="140"/>

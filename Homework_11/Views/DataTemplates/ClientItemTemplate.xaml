@@ -1,0 +1,118 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- <DataTemplate x:Key="ClientItemTemplate"> -->
+    <!--     <Grid> -->
+    <!--         <Grid.ColumnDefinitions> -->
+    <!--             <ColumnDefinition Width="*"/> -->
+    <!--             <ColumnDefinition Width="Auto"/> -->
+    <!--         </Grid.ColumnDefinitions> -->
+    <!--         <StackPanel Grid.Column="0" Orientation="Horizontal"> -->
+    <!--             <TextBlock Text="{Binding Path=}"  -->
+    <!--                        Margin="10,0" -->
+    <!--                        VerticalAlignment="Center" -->
+    <!--                        ToolTip="Наименование" -->
+    <!--                        Style="{StaticResource GoldTextBlockStyle}" -->
+    <!--             /> -->
+    <!--             <TextBlock Text="|"  -->
+    <!--                        VerticalAlignment="Center" -->
+    <!--                        Style="{StaticResource GrayTextBlockStyle}" -->
+    <!--             /> -->
+    <!--             <TextBlock Text="{Binding Path=BindingSignalModule}"  -->
+    <!--                        Margin="10,0" -->
+    <!--                        VerticalAlignment="Center" -->
+    <!--                        ToolTip="Модуль" -->
+    <!--                        Style="{StaticResource GoldTextBlockStyle}" -->
+    <!--             /> -->
+    <!--             <TextBlock Text="|"  -->
+    <!--                        VerticalAlignment="Center" -->
+    <!--                        Style="{StaticResource GrayTextBlockStyle}" -->
+    <!--             /> -->
+    <!--             <TextBlock Text="{Binding Path=BindingSignalChanel}"  -->
+    <!--                        Margin="10,0" -->
+    <!--                        VerticalAlignment="Center" -->
+    <!--                        ToolTip="Канал модуля" -->
+    <!--                        Style="{StaticResource GoldTextBlockStyle}" -->
+    <!--             /> -->
+    <!--             <TextBlock Text="|"  -->
+    <!--                        VerticalAlignment="Center" -->
+    <!--                        Style="{StaticResource GrayTextBlockStyle}" -->
+    <!--             /> -->
+    <!--             <TextBlock Text="{Binding Path=BindingSignalTitle}"  -->
+    <!--                        Margin="10,0" -->
+    <!--                        VerticalAlignment="Center" -->
+    <!--                        ToolTip="Обозначение" -->
+    <!--                        Style="{StaticResource GoldTextBlockStyle}" -->
+    <!--             /> -->
+    <!--             <TextBlock Text="|"  -->
+    <!--                        VerticalAlignment="Center" -->
+    <!--                        Style="{StaticResource GrayTextBlockStyle}" -->
+    <!--             /> -->
+    <!--             <TextBlock Text="{Binding Path=BindingSignalIdent}"  -->
+    <!--                        Margin="10,0" -->
+    <!--                        VerticalAlignment="Center" -->
+    <!--                        ToolTip="Идентификатор" -->
+    <!--                        Style="{StaticResource GoldTextBlockStyle}" -->
+    <!--             /> -->
+    <!--             <TextBlock Text="|"  -->
+    <!--                        VerticalAlignment="Center" -->
+    <!--                        Style="{StaticResource GrayTextBlockStyle}" -->
+    <!--             /> -->
+    <!--             <TextBlock Text="{Binding Path=BindingSignalConnector}"  -->
+    <!--                        Margin="10,0" -->
+    <!--                        VerticalAlignment="Center" -->
+    <!--                        ToolTip="Клеммник" -->
+    <!--                        Style="{StaticResource GoldTextBlockStyle}" -->
+    <!--             /> -->
+    <!--             <TextBlock Text="|"  -->
+    <!--                        VerticalAlignment="Center" -->
+    <!--                        Style="{StaticResource GrayTextBlockStyle}" -->
+    <!--             /> -->
+    <!--             <TextBlock Text="{Binding Path=BindingSignalEngUnit}"  -->
+    <!--                        Margin="10,0" -->
+    <!--                        VerticalAlignment="Center" -->
+    <!--                        ToolTip="Ед. изм." -->
+    <!--                        Style="{StaticResource GoldTextBlockStyle}" -->
+    <!--             /> -->
+    <!--             <TextBlock Text="|"  -->
+    <!--                        VerticalAlignment="Center" -->
+    <!--                        Style="{StaticResource GrayTextBlockStyle}" -->
+    <!--             /> -->
+    <!--             <TextBlock Text="{Binding Path=BindingSignalPhysicalUnit}"  -->
+    <!--                        Margin="10,0" -->
+    <!--                        VerticalAlignment="Center" -->
+    <!--                        ToolTip="Ед. изм. (физика)" -->
+    <!--                        Style="{StaticResource GoldTextBlockStyle}" -->
+    <!--             /> -->
+    <!--             <TextBlock Text="|"  -->
+    <!--                        VerticalAlignment="Center" -->
+    <!--                        Style="{StaticResource GrayTextBlockStyle}" -->
+    <!--             /> -->
+    <!--             <TextBlock Text="{Binding Path=BindingSignalEngPrecision}"  -->
+    <!--                        Margin="10,0" -->
+    <!--                        VerticalAlignment="Center" -->
+    <!--                        ToolTip="Кол-во знаков" -->
+    <!--                        Style="{StaticResource GoldTextBlockStyle}" -->
+    <!--             /> -->
+    <!--             <TextBlock Text="|"  -->
+    <!--                        VerticalAlignment="Center" -->
+    <!--                        Style="{StaticResource GrayTextBlockStyle}" -->
+    <!--             /> -->
+    <!--             <TextBlock Text="{Binding Path=BindingSignalPhysicalPrecision}"  -->
+    <!--                        Margin="10,0" -->
+    <!--                        VerticalAlignment="Center" -->
+    <!--                        ToolTip="Кол-во знаков (физика)" -->
+    <!--                        Style="{StaticResource GoldTextBlockStyle}" -->
+    <!--             /> -->
+    <!--         </StackPanel> -->
+    <!--         <Button Grid.Column="1" Command="{Binding Path=EditSignalCommand}"  -->
+    <!--                 Margin="10, 5"   -->
+    <!--         > -->
+    <!--             <StackPanel Orientation="Horizontal"> -->
+    <!--                 <fa:ImageAwesome Icon="Regular_Edit" Height="20" Margin="0,0,10,0"/> -->
+    <!--                 <TextBlock Text="Редактировать" Style="{StaticResource GrayTextBlockStyle}"/> -->
+    <!--             </StackPanel> -->
+    <!--         </Button> -->
+    <!--     </Grid> -->
+    <!-- </DataTemplate> -->
+    
+</ResourceDictionary>
