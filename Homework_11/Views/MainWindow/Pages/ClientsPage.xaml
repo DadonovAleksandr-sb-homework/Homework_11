@@ -14,7 +14,8 @@
         <vm:ClientsViewModel/>
     </Page.DataContext>
     <Page.Resources>
-        <c:PassportDataToString x:Key="PassportDataConvertor"></c:PassportDataToString>
+        <c:PassportDataToString x:Key="PassportDataConvertor"/>
+        <c:SelectedItemToBorderThickness x:Key="SelectedItemToBorderThicknessConvertor"/>
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -31,24 +32,9 @@
                         </ResourceDictionary.MergedDictionaries>
                     </ResourceDictionary>
                 </StackPanel.Resources>
-                <ListBox ItemsSource="{Binding Path=Clients}" HorizontalContentAlignment="Stretch">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Border CornerRadius="10" Margin="2" BorderThickness="2" BorderBrush="#844eff" Background="#353340">
-                                <StackPanel Orientation="Vertical">
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                                        <TextBlock Text="{Binding LastName}" Foreground="Silver" Margin="5"/>
-                                        <TextBlock Text="{Binding FirstName}" Foreground="Silver" Margin="5"/>
-                                        <TextBlock Text="{Binding MiddleName}" Foreground="Silver" Margin="5"/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
-                                        <TextBlock Text="{Binding StringPassportData, StringFormat=Паспортные данные: {0}}" Foreground="Silver" Margin="5"/>
-                                        <TextBlock Text="{Binding PhoneNumber, StringFormat=Телефон: {0}}" Foreground="Silver" Margin="5"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </Border>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
+                <ListBox ItemsSource="{Binding Path=Clients}"  
+                         ItemTemplate="{StaticResource ClientItemTemplate}"
+                         HorizontalContentAlignment="Stretch">
                     <ListBox.Template>
                         <ControlTemplate>
                             <ItemsPresenter />
@@ -58,9 +44,12 @@
             </StackPanel>    
         </ScrollViewer>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="Добавить" Margin="5" Width="140"/>
-            <Button Content="Редактировать" Margin="5" Width="140"/>
-            <Button Content="Удалить" Margin="5" Width="140" Background="Red"/>
+            <Button Content="Добавить" IsEnabled="{Binding EnableAddClient}" 
+                    Margin="5" Width="140"/>
+            <Button Content="Редактировать" IsEnabled="{Binding EnableEditClient}"
+                    Margin="5" Width="140"/>
+            <Button Content="Удалить" IsEnabled="{Binding EnableDelClient}"
+                    Margin="5" Width="140" Background="Red"/>
         </StackPanel>
     </Grid>
 </Page>

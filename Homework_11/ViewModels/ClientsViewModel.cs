@@ -29,8 +29,10 @@ public class ClientsViewModel : BaseViewModel
         #endregion
         //TODO: спросить как сделать отслеживание изменений клиентов, чтобы данные автоматически обновллялись и во вьюхе и репозитории
         Clients = new ObservableCollection<ClientInfo>(mainVm.Bank.GetClientsInfo());
+        _enableAddClient = mainVm.Worker.DataAccess.AddClient;
+        _enableDelClient = mainVm.Worker.DataAccess.DelClient;
+        _enableEditClient = mainVm.Worker.DataAccess.EditClient;
     }
-    
     
     #region Commands
 
@@ -71,15 +73,30 @@ public class ClientsViewModel : BaseViewModel
 
     #endregion
     
-    
-    #region Window title
-    
-    private bool dataAccess;
-    
-    public bool DataAccess
+    #region EnableAddClient
+    private bool _enableAddClient;
+    public bool EnableAddClient
     {
-        get => dataAccess;
-        set => Set(ref dataAccess, value);
+        get => _enableAddClient;
+        set => Set(ref _enableAddClient, value);
+    }
+    #endregion
+    
+    #region EnableDelClient
+    private bool _enableDelClient;
+    public bool EnableDelClient
+    {
+        get => _enableDelClient;
+        set => Set(ref _enableDelClient, value);
+    }
+    #endregion
+    
+    #region EnableEditClient
+    private bool _enableEditClient;
+    public bool EnableEditClient
+    {
+        get => _enableEditClient;
+        set => Set(ref _enableEditClient, value);
     }
     #endregion
 }
