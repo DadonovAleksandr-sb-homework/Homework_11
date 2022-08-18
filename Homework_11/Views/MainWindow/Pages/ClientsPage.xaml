@@ -7,20 +7,20 @@
       xmlns:c="clr-namespace:Homework_11.Infrastructure.Convertors"
       xmlns:local="clr-namespace:Homework_11.Views.MainWindow.Pages"
       mc:Ignorable="d"
-      Title="Clients" 
+      Title="Clients"
       d:Height="450" d:Width="800"
       Background="Transparent">
     <Page.DataContext>
-        <vm:ClientsViewModel/>
+        <vm:ClientsViewModel />
     </Page.DataContext>
     <Page.Resources>
-        <c:PassportDataToString x:Key="PassportDataConvertor"/>
-        <c:SelectedItemToBorderThickness x:Key="SelectedItemToBorderThicknessConvertor"/>
+        <c:PassportDataToString x:Key="PassportDataConvertor" />
+        <c:SelectedItemToBorderThickness x:Key="SelectedItemToBorderThicknessConvertor" />
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <ScrollViewer VerticalScrollBarVisibility="Auto"
                       Style="{StaticResource FavsScrollViewer}">
@@ -28,12 +28,14 @@
                 <StackPanel.Resources>
                     <ResourceDictionary>
                         <ResourceDictionary.MergedDictionaries>
-                            <ResourceDictionary Source="/Views/DataTemplates/ClientItemTemplate.xaml"/>
+                            <ResourceDictionary Source="/Views/DataTemplates/ClientItemTemplate.xaml" />
                         </ResourceDictionary.MergedDictionaries>
                     </ResourceDictionary>
                 </StackPanel.Resources>
-                <ListBox ItemsSource="{Binding Path=Clients}"  
+                <ListBox ItemsSource="{Binding Path=Clients}"
                          ItemTemplate="{StaticResource ClientItemTemplate}"
+                         SelectedItem="{Binding SelectedClient}"
+                         SelectedIndex="{Binding SelectedIndex}"
                          HorizontalContentAlignment="Stretch">
                     <ListBox.Template>
                         <ControlTemplate>
@@ -41,16 +43,21 @@
                         </ControlTemplate>
                     </ListBox.Template>
                 </ListBox>
-            </StackPanel>    
+            </StackPanel>
         </ScrollViewer>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="Добавить" IsEnabled="{Binding EnableAddClient}" 
-                    Margin="5" Width="140"/>
-            <Button Content="Редактировать" IsEnabled="{Binding EnableEditClient}"
-                    Margin="5" Width="140"/>
-            <Button Content="Удалить" IsEnabled="{Binding EnableDelClient}"
-                    Margin="5" Width="140" Background="Red"/>
+            <Button Content="Добавить" 
+                    Command="{Binding AddClientCommand}"
+                    IsEnabled="{Binding EnableAddClient}"
+                    Margin="5" Width="140" />
+            <Button Content="Редактировать" 
+                    Command="{Binding EditClientCommand}"
+                    IsEnabled="{Binding EnableEditClient}"
+                    Margin="5" Width="140" />
+            <Button Content="Удалить"
+                    Command="{Binding DelClientCommand}"
+                    IsEnabled="{Binding EnableDelClient}"
+                    Margin="5" Width="140" Background="Red" />
         </StackPanel>
     </Grid>
 </Page>
-

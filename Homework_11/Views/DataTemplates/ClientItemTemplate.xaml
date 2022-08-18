@@ -22,35 +22,35 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                     <TextBlock Text="{Binding LastName}"
                                Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, 
-                                    Path=IsSelected, Converter={StaticResource SelectedItemToForegroundColorConvertor}}"
+                                    Path=IsSelected, Converter={StaticResource SelectedItemToForegroundColorConvertor}, Mode=OneWay}"
                                FontSize="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, 
-                                    Path=IsSelected, Converter={StaticResource SelectedItemToFontSizeConvertor}}"
+                                    Path=IsSelected, Converter={StaticResource SelectedItemToFontSizeConvertor}, Mode=OneWay}"
                                Margin="5"/>
                     <TextBlock Text="{Binding FirstName}" 
                                Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, 
-                                    Path=IsSelected, Converter={StaticResource SelectedItemToForegroundColorConvertor}}"
+                                    Path=IsSelected, Converter={StaticResource SelectedItemToForegroundColorConvertor}, Mode=OneWay}"
                                FontSize="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, 
-                                    Path=IsSelected, Converter={StaticResource SelectedItemToFontSizeConvertor}}"
+                                    Path=IsSelected, Converter={StaticResource SelectedItemToFontSizeConvertor}, Mode=OneWay}"
                                Margin="5"/>
                     <TextBlock Text="{Binding MiddleName}" 
                                Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, 
-                                    Path=IsSelected, Converter={StaticResource SelectedItemToForegroundColorConvertor}}"
+                                    Path=IsSelected, Converter={StaticResource SelectedItemToForegroundColorConvertor}, Mode=OneWay}"
                                FontSize="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, 
-                                    Path=IsSelected, Converter={StaticResource SelectedItemToFontSizeConvertor}}"
+                                    Path=IsSelected, Converter={StaticResource SelectedItemToFontSizeConvertor}, Mode=OneWay}"
                                Margin="5"/>
                 </StackPanel>
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
                     <TextBlock Text="{Binding StringPassportData, StringFormat=Паспортные данные: {0}}" 
                                Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, 
-                                    Path=IsSelected, Converter={StaticResource SelectedItemToForegroundColorConvertor}}"
+                                    Path=IsSelected, Converter={StaticResource SelectedItemToForegroundColorConvertor}, Mode=OneWay}"
                                FontSize="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, 
-                                    Path=IsSelected, Converter={StaticResource SelectedItemToFontSizeConvertor}}" 
+                                    Path=IsSelected, Converter={StaticResource SelectedItemToFontSizeConvertor}, Mode=OneWay}" 
                                Margin="5"/>
                     <TextBlock Text="{Binding PhoneNumber, StringFormat=Телефон: {0}}" 
                                Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, 
-                                    Path=IsSelected, Converter={StaticResource SelectedItemToForegroundColorConvertor}}"
+                                    Path=IsSelected, Converter={StaticResource SelectedItemToForegroundColorConvertor}, Mode=OneWay}"
                                FontSize="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, 
-                                    Path=IsSelected, Converter={StaticResource SelectedItemToFontSizeConvertor}}" 
+                                    Path=IsSelected, Converter={StaticResource SelectedItemToFontSizeConvertor}, Mode=OneWay}" 
                                Margin="5"/>
                 </StackPanel>
             </StackPanel>

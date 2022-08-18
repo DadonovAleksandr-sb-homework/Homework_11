@@ -25,16 +25,36 @@ public class Bank
         _worker = worker;
     }
 
+    /// <summary>
+    /// Получение сведений о клиентах
+    /// представление зависит от работника
+    /// </summary>
+    /// <returns></returns>
     public IEnumerable<ClientInfo> GetClientsInfo()
     {
         var clientsInfo = new List<ClientInfo>();
-        foreach (var client in ClientsRepository.GetAllClients())
+        foreach (var client in ClientsRepository)
         {
             clientsInfo.Add(_worker.GetClientInfo(client));
         }
-
         return clientsInfo;
     }
+
+    public void AddClient(Client client)
+    {
+        ClientsRepository.InsertClient(client);
+    }
+    
+    public void EditClient(Client client)
+    {
+        ClientsRepository.UpdateClient(client);
+    }
+    
+    public void DeleteClient(Client client)
+    {
+        ClientsRepository.DeleteClient(client.Id);
+    }
+    
     
     
 }

@@ -17,7 +17,10 @@ public class PhoneNumber
     public string Number
     {
         get { return _number; }
+        set { _number = value; }
     }
+
+    public PhoneNumber() {}
 
     /// <summary>
     /// Создаем номер телефона из текстовой строки

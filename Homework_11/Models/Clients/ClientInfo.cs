@@ -6,8 +6,11 @@ namespace Homework_11.ViewModels;
 public class ClientInfo : Client
 {
     public string StringPassportData { get; set; }
+
+    public ClientInfo() {}
     public ClientInfo(Client client) 
         : base(client.PhoneNumber, client.PassportData, client.FirstName, client.LastName, client.MiddleName)
     {
+        Id = client.Id;
     }
 }

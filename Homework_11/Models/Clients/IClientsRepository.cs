@@ -2,8 +2,13 @@
 
 namespace Homework_11.Models.Clients;
 
-public interface IClientsRepository
+public interface IClientsRepository : IEnumerable<Client>
 {
+    /// <summary>
+    /// Кол-во клиентов
+    /// </summary>
+    public int Count { get; }
+
     /// <summary>
     /// Получить список клиентов
     /// </summary>
@@ -34,4 +39,9 @@ public interface IClientsRepository
     /// </summary>
     /// <param name="client">Клиент</param>
     void UpdateClient(Client? client);
+    
+    /// <summary>
+    /// Удаление всех данных
+    /// </summary>
+    void Clear();
 }

@@ -15,18 +15,21 @@ public class PassportData
     public const int MinNumberValue = 1;
     public const int MaxNumberValue = 999999;
 
-    private int _series;
+    private int _serie;
+
     /// <summary>
     /// Серия
     /// </summary>
-    public int Series { get { return _series; } }
+    public int Serie { get; set; }
+    
 
     private int _number;
+
     /// <summary>
     /// Номер
     /// </summary>
-    public int Number { get { return _number; } }
-
+    public int Number { get; set; }
+    
     /// <summary>
     /// Проверка, являются ли вводимые данные серией паспорта
     /// </summary>
@@ -57,15 +60,19 @@ public class PassportData
         return true;
     }
 
+    public PassportData() {}
+    
     /// <summary>
     /// Создаем пасспорт с серией и номером
     /// </summary>
     /// <param name="series">Серия</param>
     /// <param name="number">Номер</param>
-    public PassportData(int series, int number)
+    public PassportData(int serie, int number)
     {
-        logger.Debug($"Вызов конструктора {GetType().Name} c параметрами: серия {series}, номер {number}");
-        SetData(series, number);
+        logger.Debug($"Вызов конструктора {GetType().Name} c параметрами: серия {serie}, номер {number}");
+        Serie = serie;
+        Number = number;
+        //SetData(serie, number);
     }
 
     /// <summary>
@@ -73,10 +80,10 @@ public class PassportData
     /// </summary>
     /// <param name="series">Серия</param>
     /// <param name="number">Номер</param>
-    public void CorrectData(int series, int number)
+    public void CorrectData(int serie, int number)
     {
-        logger.Debug($"Изменение паспортных данных: серия {series}, номер {number}");
-        SetData(series, number);
+        logger.Debug($"Изменение паспортных данных: серия {serie}, номер {number}");
+        SetData(serie, number);
     }
 
     /// <summary>
@@ -84,10 +91,10 @@ public class PassportData
     /// </summary>
     /// <param name="series">Серия</param>
     /// <param name="number">Номер</param>
-    private void SetData(int series, int number)
+    private void SetData(int serie, int number)
     {
-        CheckData(series, number);
-        _series = series;
+        CheckData(serie, number);
+        _serie = serie;
         _number = number;
     }
 
@@ -96,12 +103,12 @@ public class PassportData
     /// </summary>
     /// <param name="series">Серия</param>
     /// <param name="number">Номер</param>
-    private void CheckData(int series, int number)
+    private void CheckData(int serie, int number)
     {
         // проверка серии
-        if (!IsSeries(series))
+        if (!IsSeries(serie))
         {
-            throw new ArgumentException($"{nameof(series)} не может быть меньше {MinSeriesValue} и больше {MaxSeriesValue}");
+            throw new ArgumentException($"{nameof(serie)} не может быть меньше {MinSeriesValue} и больше {MaxSeriesValue}");
         }
 
         // проверка номера
@@ -114,6 +121,6 @@ public class PassportData
 
     public override string ToString()
     {
-        return $"{Series}-{Number}";
+        return $"{Serie}-{Number}";
     }
 }

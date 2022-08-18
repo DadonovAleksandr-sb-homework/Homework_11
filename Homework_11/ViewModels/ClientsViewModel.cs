@@ -3,6 +3,7 @@ using System.Windows.Input;
 using Homework_11.Infrastructure.Commands;
 using Homework_11.Models.Clients;
 using Homework_11.ViewModels.Base;
+using Homework_11.Views;
 
 namespace Homework_11.ViewModels;
 
@@ -11,7 +12,7 @@ public class ClientsViewModel : BaseViewModel
     
     public ObservableCollection<ClientInfo> Clients { get; }
     
-    IClientsRepository ClientsRepository;
+    public MainWindowViewModel MainVm;
     
     public ClientsViewModel()
     {
@@ -21,17 +22,22 @@ public class ClientsViewModel : BaseViewModel
     public ClientsViewModel(MainWindowViewModel mainVm)
     {
         logger.Debug($"Вызов конструктора {this.GetType().Name}");
+
+        MainVm = mainVm;
         
         #region Commands
         AddClientCommand = new LambdaCommand(OnAddClientCommandExecuted, CanAddClientCommandExecute);
         DelClientCommand = new LambdaCommand(OnDelClientCommandExecuted, CanDelClientCommandExecute);
         EditClientCommand = new LambdaCommand(OnEditClientCommandExecuted, CanEditClientCommandExecute);
         #endregion
+        
         //TODO: спросить как сделать отслеживание изменений клиентов, чтобы данные автоматически обновллялись и во вьюхе и репозитории
         Clients = new ObservableCollection<ClientInfo>(mainVm.Bank.GetClientsInfo());
         _enableAddClient = mainVm.Worker.DataAccess.AddClient;
         _enableDelClient = mainVm.Worker.DataAccess.DelClient;
         _enableEditClient = mainVm.Worker.DataAccess.EditClient;
+
+        _selectedIndex = 0;
     }
     
     #region Commands
@@ -41,7 +47,10 @@ public class ClientsViewModel : BaseViewModel
 
     private void OnAddClientCommandExecuted(object p)
     {
-        ;
+        ClientCardWindow clientCard = new ClientCardWindow();
+        ClientCardViewModel clientCardVm = new ClientCardViewModel(new ClientInfo(), MainVm.Bank);
+        clientCard.DataContext = clientCardVm;
+        clientCard.ShowDialog();
     }
 
     private bool CanAddClientCommandExecute(object p) => true;
@@ -53,7 +62,9 @@ public class ClientsViewModel : BaseViewModel
 
     private void OnDelClientCommandExecuted(object p)
     {
-        ;
+        if(SelectedClient is null) return;
+        
+        MainVm.Bank.DeleteClient(SelectedClient);
     }
 
     private bool CanDelClientCommandExecute(object p) => true;
@@ -64,7 +75,12 @@ public class ClientsViewModel : BaseViewModel
 
     private void OnEditClientCommandExecuted(object p)
     {
-        ;
+        if(SelectedClient is null) return;
+        
+        ClientCardWindow clientCard = new ClientCardWindow();
+        ClientCardViewModel clientCardVm = new ClientCardViewModel(SelectedClient, MainVm.Bank);
+        clientCard.DataContext = clientCardVm;
+        clientCard.ShowDialog();
     }
 
     private bool CanEditClientCommandExecute(object p) => true;
@@ -99,4 +115,23 @@ public class ClientsViewModel : BaseViewModel
         set => Set(ref _enableEditClient, value);
     }
     #endregion
+    
+    #region SelectedClient
+    private ClientInfo _selectedClient;
+    public ClientInfo SelectedClient
+    {
+        get => _selectedClient;
+        set => Set(ref _selectedClient, value);
+    }
+    #endregion
+    
+    #region SelectedIndex
+    private int _selectedIndex;
+    public int SelectedIndex
+    {
+        get => _selectedIndex;
+        set => Set(ref _selectedIndex, value);
+    }
+    #endregion
+
 }

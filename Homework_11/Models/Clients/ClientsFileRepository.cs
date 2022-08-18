@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using Newtonsoft.Json;
 using NLog;
 using JsonSerializer = System.Text.Json.JsonSerializer;
@@ -13,10 +16,12 @@ public class ClientsFileRepository: IClientsRepository
 {
     private static Logger logger = LogManager.GetCurrentClassLogger();
     
+    
+    private List<Client> _clients;
     /// <summary>
     /// Список клиентов
     /// </summary>
-    List<Client?> _clients;
+    public List<Client> Clients => _clients ?? new List<Client>();
     /// <summary>
     /// Файл репозитория
     /// </summary>
@@ -41,42 +46,6 @@ public class ClientsFileRepository: IClientsRepository
     }
 
     /// <summary>
-    /// Конструктор репозитория
-    /// </summary>
-    /// <param name="path">Путь к файлу-репозиторию</param>
-    public ClientsFileRepository(string path, IEnumerable<Client> clients) : this(path)
-    {
-        if (clients.Any())
-        {
-            int id = clients.Max(c => c.Id);
-            clients.ToList().ForEach(c=>c.Id = id++);
-        }
-        logger.Debug($"Вызов конструктора {GetType().Name} c параметрами: база клиентов {path}, клиенты в кол-ве {clients.Count()} шт");
-        
-        _path = path;
-        _clients = clients.ToList();
-        Save();
-    }
-    
-    /// <summary>
-    /// Удаление клиента
-    /// </summary>
-    /// <param name="clientId">ИД клиента</param>
-    public void DeleteClient(int clientId)
-    {
-        if(_clients.Any(c=>c.Id == clientId))
-        {
-            _clients.Remove(_clients.FirstOrDefault(c => c.Id == clientId));    
-            logger.Debug($"Удаление клиента с ID =  {clientId}");
-        }
-        else
-        {
-            logger.Warn($"Удаление клиента с ID =  {clientId} не возможно. Заданный ID не найден");
-        }
-        Save();
-    }
-
-    /// <summary>
     /// Получение данных о клиенте по ИД
     /// </summary>
     /// <param name="clientId">ИД клиента</param>
@@ -94,10 +63,15 @@ public class ClientsFileRepository: IClientsRepository
     }
 
     /// <summary>
+    /// Кол-во клиентов
+    /// </summary>
+    public int Count => Clients.Count();
+
+    /// <summary>
     /// Получение списка клиентов
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<Client?> GetAllClients() => _clients;
+    public IEnumerable<Client?> GetAllClients() => Clients;
 
     // TODO: проверить передачу null/не заполненого ID
     /// <summary>
@@ -109,7 +83,7 @@ public class ClientsFileRepository: IClientsRepository
         int id = 0;
         if (_clients.Any())
             id = _clients.Max(c => c.Id);
-        client.Id = id++;
+        client.Id = ++id;
         logger.Debug($"Добавление клиента: ID={client.Id}, Имя={client.FirstName}, Фамилия={client.LastName}");
         _clients.Add(client);   
         Save();
@@ -133,6 +107,31 @@ public class ClientsFileRepository: IClientsRepository
     }
 
     /// <summary>
+    /// Очистка репозитория
+    /// </summary>
+    /// <exception cref="NotImplementedException"></exception>
+    public void Clear() => Clients.Clear();
+    
+    
+    /// <summary>
+    /// Удаление клиента
+    /// </summary>
+    /// <param name="clientId">ИД клиента</param>
+    public void DeleteClient(int clientId)
+    {
+        if(_clients.Any(c=>c.Id == clientId))
+        {
+            _clients.Remove(_clients.FirstOrDefault(c => c.Id == clientId));    
+            logger.Debug($"Удаление клиента с ID =  {clientId}");
+        }
+        else
+        {
+            logger.Warn($"Удаление клиента с ID =  {clientId} не возможно. Заданный ID не найден");
+        }
+        Save();
+    }
+
+    /// <summary>
     /// Сохранение списка клиентов в файл
     /// </summary>
     void Save()
@@ -143,7 +142,7 @@ public class ClientsFileRepository: IClientsRepository
             Directory.CreateDirectory(dirPath);
         }
         string json = JsonSerializer.Serialize(_clients);
-        File.WriteAllText(_path, json, Encoding.UTF8);
+        File.WriteAllText(_path, json);
         logger.Debug($"Сохранение {_clients.Count()} клиентов в файл {_path}");
     }
 
@@ -153,8 +152,23 @@ public class ClientsFileRepository: IClientsRepository
     void Load()
     {
         string data = File.ReadAllText(_path);
-        _clients = JsonSerializer.Deserialize<List<Client>>(data);
+        _clients = JsonSerializer.Deserialize<List<Client>>(data, new JsonSerializerOptions()
+        {
+            PropertyNameCaseInsensitive = true
+        });
         logger.Debug($"Загрузка {_clients.Count()} клиентов из файла {_path}");
     }
 
+    public IEnumerator<Client> GetEnumerator()
+    {
+        for (int i = 0; i < Clients.Count(); i++)
+        {
+            yield return Clients[i];
+        }
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
 }
