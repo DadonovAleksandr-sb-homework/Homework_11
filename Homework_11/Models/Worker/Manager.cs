@@ -7,12 +7,27 @@ public class Manager : Worker
 {
     public Manager()
     {
-        DataAccess = new RoleDataAccess(true, true, true);
+        DataAccess = new RoleDataAccess(
+            new CommandsAccess
+            {
+                AddClient = true,
+                EditClient = true,
+                DelClient = true
+            }, 
+            new EditFieldsAccess()
+            {
+                FirstName = true,
+                LastName = true,
+                MidleName = true,
+                PassortData = true,
+                PhoneNumber = true
+            });
     }
     public override ClientInfo GetClientInfo(Client client)
     {
         var clientInfo = new ClientInfo(client);
-        clientInfo.StringPassportData = client.PassportData.ToString();
+        clientInfo.PassportSerie = client.PassportData.Serie.ToString();
+        clientInfo.PassportNumber = client.PassportData.Number.ToString();
         return clientInfo;
     }
 }

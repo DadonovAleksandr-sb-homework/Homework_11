@@ -33,9 +33,9 @@ public class ClientsViewModel : BaseViewModel
         
         //TODO: спросить как сделать отслеживание изменений клиентов, чтобы данные автоматически обновллялись и во вьюхе и репозитории
         Clients = new ObservableCollection<ClientInfo>(mainVm.Bank.GetClientsInfo());
-        _enableAddClient = mainVm.Worker.DataAccess.AddClient;
-        _enableDelClient = mainVm.Worker.DataAccess.DelClient;
-        _enableEditClient = mainVm.Worker.DataAccess.EditClient;
+        _enableAddClient = mainVm.Worker.DataAccess.Commands.AddClient;
+        _enableDelClient = mainVm.Worker.DataAccess.Commands.DelClient;
+        _enableEditClient = mainVm.Worker.DataAccess.Commands.EditClient;
 
         _selectedIndex = 0;
 
@@ -65,7 +65,7 @@ public class ClientsViewModel : BaseViewModel
     private void OnAddClientCommandExecuted(object p)
     {
         ClientCardWindow clientCard = new ClientCardWindow();
-        ClientCardViewModel clientCardVm = new ClientCardViewModel(new ClientInfo(), MainVm.Bank, this);
+        ClientCardViewModel clientCardVm = new ClientCardViewModel(new ClientInfo(), MainVm.Bank, this, MainVm.Worker.DataAccess);
         clientCard.DataContext = clientCardVm;
         clientCard.ShowDialog();
     }
@@ -95,7 +95,7 @@ public class ClientsViewModel : BaseViewModel
         if(SelectedClient is null) return;
         
         ClientCardWindow clientCard = new ClientCardWindow();
-        ClientCardViewModel clientCardVm = new ClientCardViewModel(SelectedClient, MainVm.Bank, this);
+        ClientCardViewModel clientCardVm = new ClientCardViewModel(SelectedClient, MainVm.Bank, this, MainVm.Worker.DataAccess);
         clientCard.DataContext = clientCardVm;
         clientCard.ShowDialog();
     }

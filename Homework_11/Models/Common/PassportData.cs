@@ -35,11 +35,16 @@ public class PassportData
     /// </summary>
     /// <param name="series">Серия</param>
     /// <returns></returns>
-    public static bool IsSeries(int series)
+    public static bool IsSeries(string value)
     {
-        if (series < MinSeriesValue || series > MaxSeriesValue)
+        int serie;
+        
+        if (!int.TryParse(value, out serie))
+            return false;
+
+        if (serie < MinSeriesValue || serie > MaxSeriesValue)
         {
-            logger.Debug($"Число {series} не является корректным для серии паспорта");
+            logger.Debug($"Число {serie} не является корректным для серии паспорта");
             return false;
         }
         return true;
@@ -50,8 +55,13 @@ public class PassportData
     /// </summary>
     /// <param name="number">Номер</param>
     /// <returns></returns>
-    public static bool IsNumber(int number)
+    public static bool IsNumber(string value)
     {
+        int number;
+        
+        if (!int.TryParse(value, out number))
+            return false;
+        
         if (number < MinNumberValue || number > MaxNumberValue)
         {
             logger.Debug($"Число {number} не является корректным для номера паспорта");
@@ -73,50 +83,6 @@ public class PassportData
         Serie = serie;
         Number = number;
         //SetData(serie, number);
-    }
-
-    /// <summary>
-    /// Корректировка пасспортных данных
-    /// </summary>
-    /// <param name="series">Серия</param>
-    /// <param name="number">Номер</param>
-    public void CorrectData(int serie, int number)
-    {
-        logger.Debug($"Изменение паспортных данных: серия {serie}, номер {number}");
-        SetData(serie, number);
-    }
-
-    /// <summary>
-    /// Установка паспортных данных
-    /// </summary>
-    /// <param name="series">Серия</param>
-    /// <param name="number">Номер</param>
-    private void SetData(int serie, int number)
-    {
-        CheckData(serie, number);
-        _serie = serie;
-        _number = number;
-    }
-
-    /// <summary>
-    /// Проверка валидности паспортных данных
-    /// </summary>
-    /// <param name="series">Серия</param>
-    /// <param name="number">Номер</param>
-    private void CheckData(int serie, int number)
-    {
-        // проверка серии
-        if (!IsSeries(serie))
-        {
-            throw new ArgumentException($"{nameof(serie)} не может быть меньше {MinSeriesValue} и больше {MaxSeriesValue}");
-        }
-
-        // проверка номера
-        if (!IsNumber(number))
-        {
-            throw new ArgumentException($"{nameof(number)} не может быть меньше {MinNumberValue} и больше {MaxNumberValue}");
-        }
-
     }
 
     public override string ToString()

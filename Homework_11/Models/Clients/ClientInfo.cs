@@ -2,10 +2,14 @@
 using Homework_11.Models.Common;
 
 namespace Homework_11.ViewModels;
-
+/// <summary>
+/// Информация о клиенте для отображения
+/// TODO: чет слишком кучеряво получилось. Прикольно было бы выяснить, может как-то по другому можно?
+/// </summary>
 public class ClientInfo : Client
 {
-    public string StringPassportData { get; set; }
+    public string PassportSerie { get; set; }
+    public string PassportNumber { get; set; }
 
     public ClientInfo() {}
     public ClientInfo(Client client) 

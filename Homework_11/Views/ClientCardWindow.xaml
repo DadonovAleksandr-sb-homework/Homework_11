@@ -4,6 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:c="clr-namespace:Homework_11.Infrastructure.Convertors"
         xmlns:vm="clr-namespace:Homework_11.ViewModels"
         xmlns:local="clr-namespace:Homework_11.Views"
         mc:Ignorable="d"
@@ -15,6 +16,9 @@
      <!-- <Window.DataContext> -->
      <!--      <vm:ClientCardViewModel/> -->
      <!-- </Window.DataContext> -->
+     <Window.Resources>
+         <c:InputValueHighlightingConvertor x:Key="InputValueHighlightingConvertor" />
+     </Window.Resources>
      <Grid>
          <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -54,7 +58,6 @@
                  </Style>
                  <Style x:Key="BorderToTextBox" TargetType="{x:Type Border}">
                      <Setter Property="Background" Value="#353340"/>
-                     <Setter Property="BorderBrush" Value="#844eff"/>
                      <Setter Property="CornerRadius" Value="5"/>
                      <Setter Property="BorderThickness" Value="2"/>
                      <Setter Property="Margin" Value="10,2,0,2"/>
@@ -77,27 +80,45 @@
            <TextBlock Grid.Row="2" Grid.Column="0" Text="Отчество" Style="{StaticResource SilverTextBlockData}"/>
            <TextBlock Grid.Row="3" Grid.Column="0" Text="Паспорт" Style="{StaticResource SilverTextBlockData}"/>
            <TextBlock Grid.Row="4" Grid.Column="0" Text="Телефон" Style="{StaticResource SilverTextBlockData}"/>
-           <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource BorderToTextBox}">
-               <TextBox  Text="{Binding LastName}" Style="{StaticResource SilverTextBoxData}"/>    
+           <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource BorderToTextBox}"
+                   BorderBrush="{Binding BorderLastName, Converter={StaticResource InputValueHighlightingConvertor}}">
+               <TextBox  Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                         Style="{StaticResource SilverTextBoxData}"
+                         IsEnabled="{Binding EnableLastName}"/>    
            </Border>
-           <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource BorderToTextBox}">
-               <TextBox  Text="{Binding FirstName}" Style="{StaticResource SilverTextBoxData}"/>    
+           <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource BorderToTextBox}"
+                   BorderBrush="{Binding BorderFirstName, Converter={StaticResource InputValueHighlightingConvertor}}">
+               <TextBox  Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                         Style="{StaticResource SilverTextBoxData}"
+                         IsEnabled="{Binding EnableFirstName}"/>    
            </Border>
-           <Border Grid.Row="2" Grid.Column="1" Style="{StaticResource BorderToTextBox}">
-               <TextBox  Text="{Binding MiddleName}" Style="{StaticResource SilverTextBoxData}"/>  
+           <Border Grid.Row="2" Grid.Column="1" Style="{StaticResource BorderToTextBox}"
+                   BorderBrush="{Binding BorderMiddleName, Converter={StaticResource InputValueHighlightingConvertor}}">
+               <TextBox  Text="{Binding MiddleName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                         Style="{StaticResource SilverTextBoxData}"
+                         IsEnabled="{Binding EnableMiddleName}"/>  
            </Border>
            <DockPanel Grid.Row="3" Grid.Column="1" >
                <TextBlock Text="серия" Style="{StaticResource SilverTextBlockData}" Margin="10,10, 0, 0"/>
-               <Border Style="{StaticResource BorderToTextBox}" MinWidth="120">
-                   <TextBox  Text="{Binding PassportSerie}" Style="{StaticResource SilverTextBoxData}"/>  
+               <Border Style="{StaticResource BorderToTextBox}" MinWidth="120"
+                       BorderBrush="{Binding BorderPassportSerie, Converter={StaticResource InputValueHighlightingConvertor}}">
+                   <TextBox  Text="{Binding PassportSerie, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                             Style="{StaticResource SilverTextBoxData}"
+                             IsEnabled="{Binding EnablePassportData}"/>  
                </Border>
                <TextBlock Text="номер" Style="{StaticResource SilverTextBlockData}" Margin="10,10, 0, 0"/>
-               <Border Style="{StaticResource BorderToTextBox}">
-                   <TextBox  Text="{Binding PassportNumber}" Style="{StaticResource SilverTextBoxData}"/>  
+               <Border Style="{StaticResource BorderToTextBox}"
+                       BorderBrush="{Binding BorderPassportNumber, Converter={StaticResource InputValueHighlightingConvertor}}">
+                   <TextBox  Text="{Binding PassportNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                             Style="{StaticResource SilverTextBoxData}"
+                             IsEnabled="{Binding EnablePassportData}"/>  
                </Border>
            </DockPanel>
-           <Border Grid.Row="4" Grid.Column="1" Style="{StaticResource BorderToTextBox}">
-               <TextBox  Text="{Binding PhoneNumber}" Style="{StaticResource SilverTextBoxData}"/>  
+           <Border Grid.Row="4" Grid.Column="1" Style="{StaticResource BorderToTextBox}"
+                   BorderBrush="{Binding BorderPhoneNumber, Converter={StaticResource InputValueHighlightingConvertor}}">
+               <TextBox  Text="{Binding PhoneNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                         Style="{StaticResource SilverTextBoxData}"
+                         IsEnabled="{Binding EnablePhoneNumber}"/>  
            </Border>
          </Grid>
          <StackPanel Grid.Row="1" Orientation="Horizontal" 
@@ -107,6 +128,7 @@
             <Button Content="Сохранить" 
                     Command="{Binding SaveClientData}"
                     CommandParameter="{Binding ElementName=ClientCardView}"
+                    IsEnabled="{Binding EnableSaveClient}"
                     IsDefault="True"
                     Margin="5" Width="140" />
             <Button Content="Отмена" 

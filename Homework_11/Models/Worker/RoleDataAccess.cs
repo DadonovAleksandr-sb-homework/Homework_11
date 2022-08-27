@@ -2,14 +2,28 @@
 
 public class RoleDataAccess
 {
-    public bool AddClient { get; }
-    public bool DelClient { get; }
-    public bool EditClient { get; }
+    public CommandsAccess Commands;
+    public EditFieldsAccess EditFields;
     
-    public RoleDataAccess(bool addClient, bool delClient, bool editClient)
+    public RoleDataAccess(CommandsAccess commands, EditFieldsAccess editFields)
     {
-        AddClient = addClient;
-        DelClient = delClient;
-        EditClient = editClient;
+        Commands = commands;
+        EditFields = editFields;
     }
+}
+
+public struct CommandsAccess
+{
+    public bool AddClient;
+    public bool DelClient;
+    public bool EditClient;
+}
+
+public struct EditFieldsAccess
+{
+    public bool FirstName;
+    public bool LastName;
+    public bool MidleName;
+    public bool PhoneNumber;
+    public bool PassortData;
 }
