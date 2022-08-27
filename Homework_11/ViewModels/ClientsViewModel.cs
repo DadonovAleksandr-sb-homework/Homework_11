@@ -1,7 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Homework_11.Infrastructure.Commands;
-using Homework_11.Models.Clients;
 using Homework_11.ViewModels.Base;
 using Homework_11.Views;
 
@@ -9,7 +9,7 @@ namespace Homework_11.ViewModels;
 
 public class ClientsViewModel : BaseViewModel
 {
-    
+    public Action UpdateClientsList;
     public ObservableCollection<ClientInfo> Clients { get; }
     
     public MainWindowViewModel MainVm;
@@ -38,8 +38,25 @@ public class ClientsViewModel : BaseViewModel
         _enableEditClient = mainVm.Worker.DataAccess.EditClient;
 
         _selectedIndex = 0;
+
+        UpdateClientsList += UpdateClients;
     }
-    
+
+    /// <summary>
+    /// Обновление списка клиентов
+    /// </summary>
+    private void UpdateClients()
+    {
+        var selectedIndex = _selectedIndex;
+        Clients.Clear();
+        foreach (var clientInfo in MainVm.Bank.GetClientsInfo())
+        {
+            Clients.Add(clientInfo);
+        }
+
+        SelectedIndex = selectedIndex;
+    }
+
     #region Commands
 
     #region AddClient
@@ -48,7 +65,7 @@ public class ClientsViewModel : BaseViewModel
     private void OnAddClientCommandExecuted(object p)
     {
         ClientCardWindow clientCard = new ClientCardWindow();
-        ClientCardViewModel clientCardVm = new ClientCardViewModel(new ClientInfo(), MainVm.Bank);
+        ClientCardViewModel clientCardVm = new ClientCardViewModel(new ClientInfo(), MainVm.Bank, this);
         clientCard.DataContext = clientCardVm;
         clientCard.ShowDialog();
     }
@@ -78,7 +95,7 @@ public class ClientsViewModel : BaseViewModel
         if(SelectedClient is null) return;
         
         ClientCardWindow clientCard = new ClientCardWindow();
-        ClientCardViewModel clientCardVm = new ClientCardViewModel(SelectedClient, MainVm.Bank);
+        ClientCardViewModel clientCardVm = new ClientCardViewModel(SelectedClient, MainVm.Bank, this);
         clientCard.DataContext = clientCardVm;
         clientCard.ShowDialog();
     }

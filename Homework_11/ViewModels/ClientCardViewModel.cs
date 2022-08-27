@@ -4,7 +4,6 @@ using Homework_11.Infrastructure.Commands;
 using Homework_11.Models;
 using Homework_11.Models.Clients;
 using Homework_11.Models.Common;
-using Homework_11.Models.Worker;
 using Homework_11.ViewModels.Base;
 
 namespace Homework_11.ViewModels;
@@ -13,11 +12,14 @@ public class ClientCardViewModel : BaseViewModel
 {
     private ClientInfo _currentClientInfo { get; set; }
     private Bank _bank { get; set; }
+    private ClientsViewModel _clientsVm;
     
-    public ClientCardViewModel(ClientInfo clientInfo, Bank bank)
+    
+    public ClientCardViewModel(ClientInfo clientInfo, Bank bank, ClientsViewModel clientsVm)
     {
         _currentClientInfo = clientInfo;
         _bank = bank;
+        _clientsVm = clientsVm;
         
         FillFields(_currentClientInfo);
 
@@ -50,17 +52,21 @@ public class ClientCardViewModel : BaseViewModel
         if (_currentClientInfo.Id == 0) // новый клиент
         {
             _bank.AddClient(client);
+            //TODO: наверное окно не закроется, если добавлять нового клиента
             return;
         }
 
         client.Id = _currentClientInfo.Id;
         _bank.EditClient(client);
         
+        _clientsVm.UpdateClientsList.Invoke();
+        
         if (p is Window window)
         {
             window.Close();
             logger.Debug($"Закрытие окна {window.Title}");
         }
+        
     }
     private bool CanSaveClientDataExecute(object p) => true;
     #endregion
