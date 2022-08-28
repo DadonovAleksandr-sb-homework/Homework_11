@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using Homework_11.Models.Clients;
 using Homework_11.ViewModels;
+using NLog;
 
 namespace Homework_11.Models;
 
 public class Bank
 {
+    private static Logger logger = LogManager.GetCurrentClassLogger();
+
     /// <summary>
     /// Наименование Банка.
     /// </summary>
@@ -42,16 +45,28 @@ public class Bank
 
     public void AddClient(Client client)
     {
+        logger.Info($"{_worker}. Добавление клиента: ID={client.Id}, Имя={client.FirstName}, Фамилия={client.LastName}, " +
+                     $"Отчество={client.MiddleName}, Пасспортные данные: серия={client.PassportData.Serie}, номер={client.PassportData.Number}, " +
+                     $"Телефон={client.PhoneNumber}");
+
         ClientsRepository.InsertClient(client);
     }
     
     public void EditClient(Client client)
     {
+        logger.Info($"{_worker}. Редактирование клиента: ID={client.Id}, Имя={client.FirstName}, Фамилия={client.LastName}, " +
+                    $"Отчество={client.MiddleName}, Пасспортные данные: серия={client.PassportData.Serie}, номер={client.PassportData.Number}, " +
+                    $"Телефон={client.PhoneNumber}");
+
         ClientsRepository.UpdateClient(client);
     }
     
     public void DeleteClient(Client client)
     {
+        logger.Info($"{_worker}. Удаление клиента: ID={client.Id}, Имя={client.FirstName}, Фамилия={client.LastName}, " +
+                    $"Отчество={client.MiddleName}, Пасспортные данные: серия={client.PassportData.Serie}, номер={client.PassportData.Number}, " +
+                    $"Телефон={client.PhoneNumber}");
+        
         ClientsRepository.DeleteClient(client.Id);
     }
     

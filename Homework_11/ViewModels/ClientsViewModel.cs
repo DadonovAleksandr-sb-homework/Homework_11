@@ -82,6 +82,7 @@ public class ClientsViewModel : BaseViewModel
         if(SelectedClient is null) return;
         
         MainVm.Bank.DeleteClient(SelectedClient);
+        UpdateClients();
     }
 
     private bool CanDelClientCommandExecute(object p) => true;

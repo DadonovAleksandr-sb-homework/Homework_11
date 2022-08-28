@@ -31,4 +31,9 @@ public class Consultant : Worker
         clientInfo.PassportNumber = "******";
         return clientInfo;
     }
+
+    public override string ToString()
+    {
+        return "Консультант";
+    }
 }

@@ -30,4 +30,9 @@ public class Manager : Worker
         clientInfo.PassportNumber = client.PassportData.Number.ToString();
         return clientInfo;
     }
+
+    public override string ToString()
+    {
+        return "Менеджер";
+    }
 }

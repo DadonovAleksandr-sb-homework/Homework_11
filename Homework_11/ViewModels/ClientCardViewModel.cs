@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Input;
 using Homework_11.Infrastructure.Commands;
 using Homework_11.Models;
@@ -65,12 +66,14 @@ public class ClientCardViewModel : BaseViewModel
     /// <param name="clientInfo"></param>
     private void FillFields(ClientInfo clientInfo)
     {
-        _firstName = clientInfo.FirstName;
-        _lastName = clientInfo.LastName;
-        _middleName = clientInfo.MiddleName;
-        _phoneNumber = clientInfo.PhoneNumber.ToString();
-        _passportSerie = clientInfo.PassportSerie;
-        _passportNumber = clientInfo.PassportNumber;
+        if(clientInfo is null)
+            return;
+        _firstName = clientInfo.FirstName ?? String.Empty;
+        _lastName = clientInfo.LastName ?? String.Empty;
+        _middleName = clientInfo.MiddleName ?? String.Empty;
+        _phoneNumber = clientInfo.PhoneNumber?.ToString() ?? String.Empty;
+        _passportSerie = clientInfo.PassportSerie ?? String.Empty;
+        _passportNumber = clientInfo.PassportNumber ?? String.Empty;
     }
 
     private void CheckSaveClient()
@@ -90,19 +93,21 @@ public class ClientCardViewModel : BaseViewModel
     private void OnSaveClientDataExecuted(object p)
     {
         logger.Debug($"Команда: Сохранить измененые данные о клиенте");
+        
         var client = new Client(
             new PhoneNumber(_phoneNumber), 
-            new PassportData(int.Parse(_passportSerie), int.Parse(_passportNumber)), 
+            _enablePassportData ? new PassportData(int.Parse(_passportSerie), int.Parse(_passportNumber)) : 
+                new PassportData(_currentClientInfo.PassportData.Serie, _currentClientInfo.PassportData.Number), 
             _firstName, _lastName, _middleName);
         if (_currentClientInfo.Id == 0) // новый клиент
         {
             _bank.AddClient(client);
-            //TODO: наверное окно не закроется, если добавлять нового клиента
-            return;
         }
-
-        client.Id = _currentClientInfo.Id;
-        _bank.EditClient(client);
+        else
+        {
+            client.Id = _currentClientInfo.Id;
+            _bank.EditClient(client);
+        }
         
         _clientsVm.UpdateClientsList.Invoke();
         
