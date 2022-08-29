@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Newtonsoft.Json;
 using NLog;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
@@ -21,7 +18,7 @@ public class ClientsFileRepository: IClientsRepository
     /// <summary>
     /// Список клиентов
     /// </summary>
-    public List<Client> Clients => _clients ?? new List<Client>();
+    public List<Client> Clients => _clients;
     /// <summary>
     /// Файл репозитория
     /// </summary>
@@ -34,6 +31,9 @@ public class ClientsFileRepository: IClientsRepository
     public ClientsFileRepository(string path)
     {
         logger.Debug($"Вызов конструктора {GetType().Name} c параметрами: база клиентов {path}");
+
+        _clients = new List<Client>();
+        
         if (string.IsNullOrEmpty(path) || string.IsNullOrWhiteSpace(path))
         {
             logger.Error($"{path} не допустимое наименование файла");
@@ -73,13 +73,14 @@ public class ClientsFileRepository: IClientsRepository
     /// <returns></returns>
     public IEnumerable<Client?> GetAllClients() => Clients;
 
-    // TODO: проверить передачу null/не заполненого ID
     /// <summary>
     /// Добавление нового клиента
     /// </summary>
     /// <param name="client">клиент</param>
     public void InsertClient(Client client)
     {
+        if(client is null)
+            return;
         int id = 0;
         if (_clients.Any())
             id = _clients.Max(c => c.Id);

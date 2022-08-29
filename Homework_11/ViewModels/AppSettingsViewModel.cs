@@ -14,6 +14,8 @@ public class AppSettingsViewModel : BaseViewModel
 {
     IAppSettingsRepository _repository;
     AppSettings _appSettings;
+
+    private MainWindowViewModel _mainVm;
     public AppSettingsViewModel()
     {
         logger.Debug($"Вызов конструктора по умолчанию {this.GetType().Name}");
@@ -22,6 +24,7 @@ public class AppSettingsViewModel : BaseViewModel
     public AppSettingsViewModel(MainWindowViewModel mainWindowVm)
     {
         logger.Debug($"Вызов конструктора {this.GetType().Name}");
+        _mainVm = mainWindowVm;
         _appSettings = mainWindowVm.AppSettings;
         
         #region Commands
@@ -66,6 +69,8 @@ public class AppSettingsViewModel : BaseViewModel
         {
             clientsRepository.InsertClient(client);
         }
+
+        _mainVm.Bank.ClientsRepository = new ClientsFileRepository(_appSettings.ClientsRepositoryFilePath);
     }
 
     private bool CanGenTestClientsCommandExecute(object p) => true;

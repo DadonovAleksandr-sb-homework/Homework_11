@@ -18,7 +18,7 @@ public class Bank
     /// <summary>
     /// База клиентов
     /// </summary>
-    public IClientsRepository ClientsRepository { get; private set; }
+    public IClientsRepository ClientsRepository { get; set; }
 
     private Worker.Worker _worker;
     public Bank(string name, IClientsRepository clientsRepository, Worker.Worker worker)

@@ -31,11 +31,10 @@ public class ClientsViewModel : BaseViewModel
         EditClientCommand = new LambdaCommand(OnEditClientCommandExecuted, CanEditClientCommandExecute);
         #endregion
         
-        //TODO: спросить как сделать отслеживание изменений клиентов, чтобы данные автоматически обновллялись и во вьюхе и репозитории
-        Clients = new ObservableCollection<ClientInfo>(mainVm.Bank.GetClientsInfo());
+        Clients = new ObservableCollection<ClientInfo>();
         _enableAddClient = mainVm.Worker.DataAccess.Commands.AddClient;
         _enableDelClient = mainVm.Worker.DataAccess.Commands.DelClient;
-        _enableEditClient = mainVm.Worker.DataAccess.Commands.EditClient;
+        _enableEditClient = mainVm.Worker.DataAccess.Commands.EditClient && Clients.Count > 0;
 
         _selectedIndex = 0;
 
@@ -55,6 +54,8 @@ public class ClientsViewModel : BaseViewModel
         }
 
         SelectedIndex = selectedIndex;
+        
+        EnableEditClient = MainVm.Worker.DataAccess.Commands.EditClient && Clients.Count > 0;
     }
 
     #region Commands

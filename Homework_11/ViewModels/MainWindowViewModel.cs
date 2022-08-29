@@ -121,7 +121,14 @@ public class MainWindowViewModel : BaseViewModel
 
     #region SetClientsViewCommand
     public ICommand SetClientsView { get; }
-    private void OnSetClientsViewExecuted(object p) => CurrentPage = _clients;
+    private void OnSetClientsViewExecuted(object p)
+    {
+        CurrentPage = _clients;
+        if (_clients.DataContext is ClientsViewModel clientsVm)
+        {
+            clientsVm.UpdateClientsList.Invoke();
+        }
+    }
     private bool CanSetClientsViewExecute(object p) => true;
     #endregion
     
