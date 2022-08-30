@@ -12,13 +12,24 @@ namespace Homework_11.Models.Clients;
 public class ClientsFileRepository: IClientsRepository
 {
     private static Logger logger = LogManager.GetCurrentClassLogger();
+
+    private static int Id;
+    static ClientsFileRepository()
+    {
+        Id = 0;
+    }
+    /// <summary>
+    /// Получение следующего свободного идентификатора клиента
+    /// </summary>
+    /// <returns></returns>
+    private static int NextId() => ++Id;
     
     
-    private List<Client> _clients;
+    private List<Client>? _clients;
     /// <summary>
     /// Список клиентов
     /// </summary>
-    public List<Client> Clients => _clients;
+    public List<Client>? Clients => _clients;
     /// <summary>
     /// Файл репозитория
     /// </summary>
@@ -81,10 +92,7 @@ public class ClientsFileRepository: IClientsRepository
     {
         if(client is null)
             return;
-        int id = 0;
-        if (_clients.Any())
-            id = _clients.Max(c => c.Id);
-        client.Id = ++id;
+        client.Id = NextId();
         logger.Debug($"Добавление клиента: ID={client.Id}, Имя={client.FirstName}, Фамилия={client.LastName}");
         _clients.Add(client);   
         Save();
@@ -111,7 +119,12 @@ public class ClientsFileRepository: IClientsRepository
     /// Очистка репозитория
     /// </summary>
     /// <exception cref="NotImplementedException"></exception>
-    public void Clear() => Clients.Clear();
+    public void Clear()
+    {
+        if(Clients is null)
+            return;
+        Clients.Clear();
+    }
     
     
     /// <summary>
@@ -137,14 +150,16 @@ public class ClientsFileRepository: IClientsRepository
     /// </summary>
     void Save()
     {
-        string dirPath = Path.GetFileName(Path.GetDirectoryName(_path));
+        string? dirPath = Path.GetFileName(Path.GetDirectoryName(_path));
+        if(dirPath is null)
+            return;
         if (!Directory.Exists(dirPath))
         {
             Directory.CreateDirectory(dirPath);
         }
         string json = JsonSerializer.Serialize(_clients);
         File.WriteAllText(_path, json);
-        logger.Debug($"Сохранение {_clients.Count()} клиентов в файл {_path}");
+        logger.Debug($"Сохранение {Count} клиентов в файл {_path}");
     }
 
     /// <summary>
@@ -157,7 +172,14 @@ public class ClientsFileRepository: IClientsRepository
         {
             PropertyNameCaseInsensitive = true
         });
-        logger.Debug($"Загрузка {_clients.Count()} клиентов из файла {_path}");
+        
+        if (_clients is null)
+        {
+            logger.Error($"Не удалось загрузить клиентов из файла {_path}");
+            return;
+        }
+        logger.Debug($"Загрузка {Count} клиентов из файла {_path}");
+        Id = _clients.Max(c => c.Id);
     }
 
     public IEnumerator<Client> GetEnumerator()
