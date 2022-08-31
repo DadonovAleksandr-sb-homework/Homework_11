@@ -43,8 +43,6 @@ public class ClientsFileRepository: IClientsRepository
     {
         logger.Debug($"Вызов конструктора {GetType().Name} c параметрами: база клиентов {path}");
 
-        _clients = new List<Client>();
-        
         if (string.IsNullOrEmpty(path) || string.IsNullOrWhiteSpace(path))
         {
             logger.Error($"{path} не допустимое наименование файла");
@@ -52,8 +50,14 @@ public class ClientsFileRepository: IClientsRepository
         }
         _path = path;
 
-        if (File.Exists(_path))
+        if (File.Exists(_path)) // если файл существует, подгружаем данные
+        {
             Load();
+            return;
+        }
+        // если файл не существует, создаем новый пустой репозиторий
+        File.Create(_path);
+        NoClientsForLoad();
     }
 
     /// <summary>
@@ -168,6 +172,11 @@ public class ClientsFileRepository: IClientsRepository
     void Load()
     {
         string data = File.ReadAllText(_path);
+        if (string.IsNullOrEmpty(data))
+        {
+            NoClientsForLoad();
+            return;
+        }
         _clients = JsonSerializer.Deserialize<List<Client>>(data, new JsonSerializerOptions()
         {
             PropertyNameCaseInsensitive = true
@@ -175,11 +184,21 @@ public class ClientsFileRepository: IClientsRepository
         
         if (_clients is null)
         {
-            logger.Error($"Не удалось загрузить клиентов из файла {_path}");
+            NoClientsForLoad();
             return;
         }
         logger.Debug($"Загрузка {Count} клиентов из файла {_path}");
-        Id = _clients.Max(c => c.Id);
+        Id = Count > 0 ? _clients.Max(c => c.Id) : 0;
+    }
+
+    /// <summary>
+    /// Обработка ситуации, когда не возможно загрузить клиентов
+    /// </summary>
+    private void NoClientsForLoad()
+    {
+        logger.Error($"Не удалось загрузить клиентов из файла {_path}");
+        _clients = new List<Client>();
+        Id = 0;
     }
 
     public IEnumerator<Client> GetEnumerator()
