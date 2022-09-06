@@ -154,13 +154,6 @@ public class ClientsFileRepository: IClientsRepository
     /// </summary>
     void Save()
     {
-        string? dirPath = Path.GetFileName(Path.GetDirectoryName(_path));
-        if(dirPath is null)
-            return;
-        if (!Directory.Exists(dirPath))
-        {
-            Directory.CreateDirectory(dirPath);
-        }
         string json = JsonSerializer.Serialize(_clients);
         File.WriteAllText(_path, json);
         logger.Debug($"Сохранение {Count} клиентов в файл {_path}");
