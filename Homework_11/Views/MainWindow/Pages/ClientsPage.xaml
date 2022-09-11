@@ -22,29 +22,51 @@
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <ScrollViewer VerticalScrollBarVisibility="Auto"
-                      Style="{StaticResource FavsScrollViewer}">
-            <StackPanel Orientation="Vertical">
-                <StackPanel.Resources>
-                    <ResourceDictionary>
-                        <ResourceDictionary.MergedDictionaries>
-                            <ResourceDictionary Source="/Views/DataTemplates/ClientItemTemplate.xaml" />
-                        </ResourceDictionary.MergedDictionaries>
-                    </ResourceDictionary>
-                </StackPanel.Resources>
-                <ListBox ItemsSource="{Binding Path=Clients}"
-                         ItemTemplate="{StaticResource ClientItemTemplate}"
-                         SelectedItem="{Binding SelectedClient}"
-                         SelectedIndex="{Binding SelectedIndex}"
-                         HorizontalContentAlignment="Stretch">
-                    <ListBox.Template>
-                        <ControlTemplate>
-                            <ItemsPresenter />
-                        </ControlTemplate>
-                    </ListBox.Template>
-                </ListBox>
-            </StackPanel>
-        </ScrollViewer>
+        <DataGrid Grid.Row="0" 
+                  ItemsSource="{Binding Clients}"
+                  SelectedItem="{Binding SelectedClient}"
+                  SelectedIndex="{Binding SelectedIndex}"
+                  ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
+                  RowStyle="{DynamicResource DataGridRowStyle}"
+                  CellStyle="{DynamicResource DataGridCellStyle}"
+                  AutoGenerateColumns="False"
+                  ScrollViewer.CanContentScroll="True"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <DataGrid.Resources>
+                
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header=" ФИО " Binding="{Binding FIO}"
+                                    Width="*"/>
+                <DataGridTextColumn Header=" Паспортные данные " Binding="{Binding StringPassportData}"
+                                    Width="Auto"/>
+                <DataGridTextColumn Header=" Телефон " Binding="{Binding PhoneNumber}"
+                                    Width="Auto"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <!-- <ScrollViewer VerticalScrollBarVisibility="Auto" -->
+        <!--               Style="{StaticResource FavsScrollViewer}"> -->
+        <!--     <StackPanel Orientation="Vertical"> -->
+        <!--         <StackPanel.Resources> -->
+        <!--             <ResourceDictionary> -->
+        <!--                 <ResourceDictionary.MergedDictionaries> -->
+        <!--                     <ResourceDictionary Source="/Views/DataTemplates/ClientItemTemplate.xaml" /> -->
+        <!--                 </ResourceDictionary.MergedDictionaries> -->
+        <!--             </ResourceDictionary> -->
+        <!--         </StackPanel.Resources> -->
+        <!--         <ListBox ItemsSource="{Binding Path=Clients}" -->
+        <!--                  ItemTemplate="{StaticResource ClientItemTemplate}" -->
+        <!--                  SelectedItem="{Binding SelectedClient}" -->
+        <!--                  SelectedIndex="{Binding SelectedIndex}" -->
+        <!--                  HorizontalContentAlignment="Stretch"> -->
+        <!--             <ListBox.Template> -->
+        <!--                 <ControlTemplate> -->
+        <!--                     <ItemsPresenter /> -->
+        <!--                 </ControlTemplate> -->
+        <!--             </ListBox.Template> -->
+        <!--         </ListBox> -->
+        <!--     </StackPanel> -->
+        <!-- </ScrollViewer> -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="Добавить" 
                     Command="{Binding AddClientCommand}"

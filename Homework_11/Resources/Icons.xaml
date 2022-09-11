@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <PathGeometry
+        x:Key="SortUp"
+        Figures="M16 4.09375L15.28125 4.78125L6.78125 13.28125L8.21875 14.71875L15 7.9375L15 28L17 28L17 7.9375L23.78125 14.71875L25.21875 13.28125L16.71875 4.78125Z" />
+
+    <PathGeometry
+        x:Key="SortDown"
+        Figures="M15 4L15 24.085938L8.2070312 17.292969L6.7929688 18.707031L16 27.914062L25.207031 18.707031L23.792969 17.292969L17 24.085938L17 4L15 4 z" />
+    
+</ResourceDictionary>

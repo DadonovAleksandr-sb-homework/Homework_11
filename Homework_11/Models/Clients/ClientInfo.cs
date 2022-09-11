@@ -1,5 +1,6 @@
 ﻿using Homework_11.Models.Clients;
 using Homework_11.Models.Common;
+using Microsoft.VisualBasic;
 
 namespace Homework_11.ViewModels;
 /// <summary>
@@ -8,6 +9,8 @@ namespace Homework_11.ViewModels;
 /// </summary>
 public class ClientInfo : Client
 {
+    public string StringPassportData => PassportSerie + "-" + PassportNumber;
+    public string FIO => LastName + " " + FirstName + " " + MiddleName;
     public string PassportSerie { get; set; }
     public string PassportNumber { get; set; }
 
